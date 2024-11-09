@@ -1,0 +1,48 @@
+WISER
+
+sudo apt update && sudo apt upgrade -y
+
+# Install PHP
+sudo apt install git software-properties-common ca-certificates lsb-release apt-transport-https -y
+sudo dpkg -l | grep php | tee packages.txt
+sudo add-apt-repository ppa:ondrej/php # Press enter when prompted.
+sudo apt update
+sudo apt install php8.2 php8.2-cli php8.2-common php8.2-fpm php8.2-mysql php8.2-zip php8.2-gd php8.2-mbstring php8.2-curl php8.2-xml php8.2-bcmath openssl php8.2-tokenizer php8.2-sqlite3 -y
+
+# Install NVM for Nodejs
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.bashrc
+nvm install node
+
+# Clone wiser and install dependencies
+git clone git@github.com:acgonzales/wiser.git
+cd wiser
+composer install
+npm install && npm run build
+cp .env.example .env
+php artisan key:generate
+
+# Create database
+touch database/database.sqlite
+php artisan migrate:fresh
+
+# Install Caddy
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update
+sudo apt install caddy
+
+# Setup Laravel service
+sudo cp wiser.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable wiser
+sudo systemctl start wiser
+
+# Setup Caddy
+sudo cp Caddyfile /etc/caddy/Caddyfile
+sudo systemctl restart caddy
+# App should now be accessible
+
+# Setup CRON for scheduler
+crontab crontab.txt

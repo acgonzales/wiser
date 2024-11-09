@@ -5,4 +5,4 @@ use Illuminate\Support\Facades\Schedule;
 
 Schedule::command(UciScan::class)
     ->everyTenSeconds()
-    ->sendOutputTo("log.txt", append: true);
+    ->sendOutputTo("./storage/logs/scheduler-logs.txt");
