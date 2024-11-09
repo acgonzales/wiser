@@ -46,3 +46,10 @@ sudo systemctl restart caddy
 
 # Setup CRON for scheduler
 crontab crontab.txt
+
+# Setup interceptor
+sudo apt install python3-serial python3-requests -y
+sudo cp wiserinterceptor.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable wiserinterceptor
+sudo systemctl start wiserinterceptor

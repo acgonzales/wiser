@@ -10,6 +10,8 @@ def main():
         line = ser.readline()
         line = line.decode('utf-8').strip()
 
+        print(f"Received line: {line}")
+
         garbage_type = None
         if "metal" in line:
             garbage_type = "metal"
