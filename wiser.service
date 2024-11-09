@@ -1,0 +1,16 @@
+[Unit]
+Description=WISER
+After=network.target
+
+[Service]
+User=wiser
+Group=wiser
+WorkingDirectory=/home/wiser/wiser
+ExecStart=php artisan serve --port=8000
+Restart=always
+RestartSec=5  # Restart service after 5 seconds if node service crashes
+StandardOutput=journal  # Log output to journal
+StandardError=journal  # Log error output to journal
+
+[Install]
+WantedBy=multi-user.target
