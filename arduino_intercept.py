@@ -1,11 +1,20 @@
 import serial
 import requests
+import time
 
 create_coupon_url = 'http://127.0.0.1:8000/voucher'
 
 
 def main():
-    ser = serial.Serial('/dev/ttyACM0', 9600)
+    while True:
+        try:
+            ser = serial.Serial('/dev/ttyACM0', 9600)
+            print("Serial port opened successfully.")
+            break
+        except:
+            print("Serial port not opened. Retrying in 5 seconds...")
+            time.sleep(5)
+
     while True:
         line = ser.readline()
         line = line.decode('utf-8').strip()
