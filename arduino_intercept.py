@@ -13,8 +13,10 @@ def main():
         garbage_type = None
         if "metal" in line:
             garbage_type = "metal"
-        elif "paper" in line:
-            garbage_type = "paper"
+        elif "plastic" in line:
+            garbage_type = "plastic"
+        elif "water" in line:
+            garbage_type = "water"
         elif "other" in line:
             garbage_type = "other"
 
@@ -23,7 +25,7 @@ def main():
             response = requests.post(create_coupon_url, json={
                 "type": garbage_type,
             })
-            response_json = print(response.json())
+            response_json = response.json()
             code = response_json["code"]
             ser.write(f"{code}\n".encode('utf-8'))
 

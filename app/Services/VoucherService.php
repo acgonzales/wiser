@@ -7,8 +7,9 @@ use App\Models\WifiVoucher;
 
 class VoucherService
 {
-    public static int $METAL_VALUE = 10;
-    public static int $PAPER_VALUE = 8;
+    public static int $METAL_VALUE = 15;
+    public static int $PLASTIC_VALUE = 10;
+    public static int $WATER_VALUE = 8;
     public static int $OTHER_VALUE = 5;
 
     public function generateVoucher(int $value)

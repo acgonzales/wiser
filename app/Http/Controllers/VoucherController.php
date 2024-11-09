@@ -9,14 +9,14 @@ class VoucherController extends Controller
 {
     public function store(Request $request, VoucherService $voucherService)
     {
-        $validated = $request->validate([
-            'type' => 'required|string|in:metal,paper,other',
-        ]);
+        $validated = $request->validate(['type' => 'required|string|in:metal,plastic,water,other']);
 
         if ($validated['type'] === 'metal') {
             $value = VoucherService::$METAL_VALUE;
-        } elseif ($validated['type'] === 'paper') {
-            $value = VoucherService::$PAPER_VALUE;
+        } elseif ($validated['type'] === 'plastic') {
+            $value = VoucherService::$PLASTIC_VALUE;
+        } elseif ($validated['type'] === 'water') {
+            $value = VoucherService::$WATER_VALUE;
         } else {
             $value = VoucherService::$OTHER_VALUE;
         }
